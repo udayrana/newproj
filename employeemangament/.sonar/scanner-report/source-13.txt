@@ -1,0 +1,419 @@
+package com.mindtree.employeemanagement.controller;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.transaction.Transactional;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import com.mindtree.employeemanagement.entity.Employee;
+import com.mindtree.employeemanagement.service.EmployeeManagementServices;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@SuppressWarnings("deprecation")
+@Transactional
+public class TestEmployeeManagementController {
+	@Autowired
+	private MockMvc mockMvc;
+
+	@MockBean
+	EmployeeManagementServices mockEmpService;
+
+	@Test
+	public void getAllEmployeeDetailsSuccessSenario() throws Exception {
+		String expected = "{ \"status\": \"Success \", \"message\": \"Success \", \"statusCode\": \"200\", \"employees\": [ { \"empId\": 1, \"userName\": \"udayrana\", \"password\": \"gate\", \"fullName\": \"uday kumar\", \"emailId\": \"er.kumaruday@gmail.com\", \"dateOfBirth\": \"1992-02-10\", \"gender\": \"male\", \"securityQuestion\": \"first name?\", \"securityAnswer\": \"uday\" }, { \"empId\": 2, \"userName\": \"kavi kumar\", \"password\": \"gate\", \"fullName\": \"kavi kumar\", \"emailId\": \"er.kavi@gmail.com\", \"dateOfBirth\": \"1984-02-10\", \"gender\": \"male\", \"securityQuestion\": \"first name?\", \"securityAnswer\": \"uday\" } ] }";
+
+		Collection<Employee> employees = new ArrayList<>();
+		Employee employee1 = new Employee();
+		employee1.setEmpId(1l);
+		employee1.setUserName("udayrana");
+		employee1.setEmailId("er.kumaruday@gmail.com");
+		employee1.setDateOfBirth("1992-02-10");
+		employee1.setFullName("uday kumar");
+		employee1.setGender("male");
+		employee1.setPassword("gate");
+		employee1.setSecurityQuestion("first name?");
+		employee1.setSecurityAnswer("uday");
+
+		Employee employee2 = new Employee();
+		employee2.setEmpId(2l);
+		employee2.setUserName("kavi kumar");
+		employee2.setEmailId("er.kavi@gmail.com");
+		employee2.setDateOfBirth("1984-02-10");
+		employee2.setFullName("kavi kumar");
+		employee2.setGender("male");
+		employee2.setPassword("gate");
+		employee2.setSecurityQuestion("first name?");
+		employee2.setSecurityAnswer("uday");
+
+		employees.add(employee1);
+		employees.add(employee2);
+
+		Mockito.when(mockEmpService.findAll()).thenReturn(employees);
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/EmpMgt/getAllEmpDetails")).andExpect(
+
+				status().isOk()).andExpect(content().json(expected));
+
+	}
+
+	@Test
+	public void getAllEmployeeDetailsNoEmployeeFound() throws Exception {
+
+		Mockito.when(mockEmpService.findAll()).thenReturn(null);
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/EmpMgt/getAllEmpDetails")).andExpect(status().isOk())
+				.andExpect(content().json(
+						"{\"status\":\"failure\",\"message\":\"Exception while fetching recore from db\",\"statusCode\":\"400\",\"employees\":null}"));
+
+	}
+
+	@Test
+	public void getEmployeeByIdSuccessSenario() throws Exception {
+		String expected = "{ \"status\": \"Success \", \"message\": \"[]\", \"statusCode\": \"200 \", \"employees\": [ { \"empId\": 1, \"userName\": \"udayrana\", \"password\": \"gate\", \"fullName\": \"uday kumar\", \"emailId\": \"er.kumaruday@gmail.com\", \"dateOfBirth\": \"1992-02-10\", \"gender\": \"male\", \"securityQuestion\": \"first name?\", \"securityAnswer\": \"uday\" }] }";
+		Employee employee = new Employee();
+		employee.setEmpId(1l);
+		employee.setUserName("udayrana");
+		employee.setEmailId("er.kumaruday@gmail.com");
+		employee.setDateOfBirth("1992-02-10");
+		employee.setFullName("uday kumar");
+		employee.setGender("male");
+		employee.setPassword("gate");
+		employee.setSecurityQuestion("first name?");
+		employee.setSecurityAnswer("uday");
+
+		Mockito.when(mockEmpService.findOne(Matchers.anyLong())).thenReturn(employee);
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/EmpMgt/getByEmpId/1")).andExpect(status().isOk())
+				.andExpect(content().json(expected));
+	}
+
+	@Test
+	public void getEmployeeByIdNoEmployeeFound() throws Exception {
+		String expected = "{\"status\": \"failure\", \"message\": \"Input data mismatch\", \"statusCode\": \"400\", \"employees\":  []}";
+		Mockito.when(mockEmpService.findOne(Matchers.anyLong())).thenReturn(null);
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/EmpMgt/getByEmpId/40")).andExpect(status().isOk())
+				.andExpect(content().json(expected));
+	}
+
+	//
+	@Test
+	public void deleteEmployeeByIdSuccessSenario() throws Exception {
+		String expected = "{\"status\": \"Success\",\"message\": \"Employee data deleted successfully\", \"statusCode\": \"200\",\"employees\": null}";
+
+		Mockito.when(mockEmpService.delete(Matchers.anyLong())).thenReturn(true);
+
+		mockMvc.perform(MockMvcRequestBuilders.delete("/EmpMgt/deleteEmp/3")).andExpect(status().isOk())
+				.andExpect(content().json(expected));
+	}
+
+	@Test
+	@Rollback
+	public void deleteEmployeeByIdFailScenario() throws Exception {
+		String expected = "{\"status\":\"failure\",\"message\":\"Input data mismatch emp data not deleted\",\"statusCode\":\"400\",\"employees\":null}";
+
+		Mockito.when(mockEmpService.delete(Matchers.anyLong())).thenReturn(false);
+
+		mockMvc.perform(MockMvcRequestBuilders.delete("/EmpMgt/deleteEmp/99")).andExpect(status().isOk())
+				.andExpect(content().json(expected));
+	}
+
+	@Test
+	public void checkLoginSuccessSenario() throws Exception {
+		Employee employee = new Employee();
+		employee.setEmpId(1L);
+		employee.setUserName("udayrana");
+		employee.setEmailId("er.kumaruday@gmail.com");
+		employee.setDateOfBirth("1992-02-10");
+		employee.setFullName("uday kumar");
+		employee.setGender("male");
+		employee.setPassword("gate");
+		employee.setSecurityQuestion("first name?");
+		employee.setSecurityAnswer("uday");
+
+		String expected = "{\"status\":\"Success\",\"message\":\"Employee has authenticated successfully\",\"statusCode\":\"200\",\"employees\":[{\"empId\":1,\"userName\":\"udayrana\",\"password\":\"gate\",\"fullName\":\"uday kumar\",\"emailId\":\"er.kumaruday@gmail.com\",\"dateOfBirth\":\"1992-02-10\",\"gender\":\"male\",\"securityQuestion\":\"first name?\",\"securityAnswer\":\"uday\"}]}";
+		String input = "{\"userName\":\"udayrana\",\"password\":\"gate\"}";
+		Mockito.when(mockEmpService.checkLogin(Matchers.anyString(), Matchers.anyString())).thenReturn(employee);
+
+		mockMvc.perform(MockMvcRequestBuilders.post("/EmpMgt/checkLogin").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.content(input).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().is2xxSuccessful())
+				.andExpect(content().json(expected));
+	}
+
+	@Test
+	public void checkLoginFailSenario() throws Exception {
+		String expected = "{\"status\":\"Success\",\"message\":\"Invalid Username and Password\",\"statusCode\":\"302\",\"employees\":[]}";
+		String input = "{ \"userName\": \"udayrna\",\"password\": \"gate\"}";
+		Mockito.when(mockEmpService.checkLogin(Matchers.anyString(), Matchers.anyString())).thenReturn(null);
+
+		mockMvc.perform(MockMvcRequestBuilders.post("/EmpMgt/checkLogin").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.content(input)).andExpect(status().isOk()).andExpect(content().json(expected));
+
+	}
+
+	//
+	@Test
+	public void addEmployeeSuccessScenario() throws Exception {
+		String expected = "{ \"status\": \"Success \", \"message\": \"Employee data inserted successfully\", \"statusCode\": \"200 \", \"employees\": [] } ";
+		String input = "{ \"userName\": \"rajesh rana\", \"password\": \"gate\", \"fullName\": \"Rajesh kumar\", \"emailId\": \"er.kumaruday@gmail.com\", \"dateOfBirth\": \"1992-02-10\", \"gender\": \"male\", \"securityQuestion\": \"first name?\", \"securityAnswer\": \"uday\" } ";
+
+		Mockito.when(mockEmpService.create(Matchers.any(Employee.class))).thenReturn(null);
+
+		mockMvc.perform(MockMvcRequestBuilders.post("/EmpMgt/addEmp").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.accept(MediaType.APPLICATION_JSON_VALUE).content(input)).andExpect(status().isOk())
+				.andExpect(content().json(expected));
+	}
+
+	// ===================
+	// @Test
+	// public void testGetAllEmpDetails() throws Exception {
+	// String uri = "/EmpMgt/getAllEmpDetails";
+	//
+	// Employee employee1 = new Employee(1L, "uday", "gate", "Shekhar Gupta",
+	// "shekhar.gupta@mindtree.com",
+	// "06/04/1992", "Male", "Birth Place", "Bhopal");
+	// Employee employee2 = new Employee(2L, "sonu", "abcd", "Shekhar Gupta",
+	// "shekhar.gupta@mindtree.com",
+	// "06/04/1992", "Male", "Birth Place", "Bhopal");
+	// Employee employee3 = new Employee(3L, "tonu", "abcd", "Shekhar Gupta",
+	// "shekhar.gupta@mindtree.com",
+	// "06/04/1992", "Male", "Birth Place", "Bhopal");
+	//
+	// List<Employee> allEmployees = Arrays.asList(employee1, employee2,
+	// employee3);
+	//
+	// given(mockEmpService.findAll()).willReturn(allEmployees);
+	//
+	// mockMvc.perform(MockMvcRequestBuilders.get(uri).contentType(MediaType.APPLICATION_JSON_VALUE))
+	// .andExpect(status().is4xxClientError()).andExpect(jsonPath("$",
+	// hasSize(3)))
+	// .andExpect(jsonPath("$employees.[0].name", is(employee1.getFullName())))
+	// .andExpect(jsonPath("$employees.[1].name", is(employee2.getFullName())))
+	// .andExpect(jsonPath("$employees.[2].name", is(employee3.getFullName())));
+	// verify(mockEmpService, VerificationModeFactory.times(1)).findAll();
+	// reset(mockEmpService);
+	// }
+
+	// @Test
+	// public void testGetEmpDetails() throws Exception {
+	// String uri = "/EmpMgt/getAllEmpDetails";
+	// MvcResult result =
+	// mockMvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON_VALUE))
+	// .andReturn();
+	// String contant = result.getRequest().getContentAsString();
+	// int status = result.getResponse().getStatus();
+	//
+	// Assert.assertEquals("failure-expected Http status 200", 200, status);
+	// Assert.assertTrue("failure-expected Http response body to have value",
+	// contant.trim().length() > 0);
+	// }
+
+	// =========================================== Get All Users
+
+	// @Test
+	// public void testGetEmpDetails() throws Exception {
+	// List<Employee> emp = new LinkedList<Employee>();
+	// new Employee(1L, "ShekharG", "abcd", "Shekhar Gupta",
+	// "shekhar.gupta@mindtree.com", "06/04/1992", "Male",
+	// "Birth Place", "Bhopal");
+	//
+	// String result = "{\"statusCode\": 200,\"status\":
+	// \"Success\",\"message\": \"\",\"emp\": [ {\"empId\":
+	// 1046458,\"userName\": \"ShekharG\",\"password\": \"abcd\",\"fullName\":
+	// \"Shekhar Gupta\",\"emailId\":
+	// \"shekhar.gupta@mindtree.com\",\"dateOfBirth\":
+	// \"06/04/1992\",\"gender\": \"Male\",\"securityQuestion\": \"Birth
+	// Place\",\"securityAnswer\": \"Bhopal\" }]}";
+	// when(mockEmpService.findAll()).thenReturn(emp);
+	//
+	// mockMvc.perform(get("/EmpMgt/getAllEmpDetails")).andExpect(status().isOk())
+	// .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+	// .andExpect(status().is2xxSuccessful()).andExpect(content().json(result));
+	//
+	// }
+
+	// @Test
+	// public void testGetEmpDetailByEmpId() throws Exception {
+	// String uri = "/EmpMgt/getByEmpId/{empId}";
+	// Long empId = new Long(1);
+	// MvcResult result = mockMvc
+	// .perform(MockMvcRequestBuilders.get(uri,
+	// empId).accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+	// String contant = result.getRequest().getContentAsString();
+	// int status = result.getResponse().getStatus();
+	//
+	// Assert.assertEquals("failure-expected Http status 200", 200, status);
+	// Assert.assertTrue("failure-expected Http response body to have value",
+	// contant.trim().length() > 0);
+	// }
+
+	// =========================================== Get User by id
+	// @Test
+	// public void testGetEmpDetailByEmpId() throws Exception {
+	//
+	// Employee emp = new Employee(30L, "ShekharG", "abcd", "Shekhar Gupta",
+	// "shekhar.gupta@mindtree.com",
+	// "06/04/1992", "Male", "Birth Place", "Bhopal");
+	//
+	// String result = "{\"statusCode\": 200,\"status\":
+	// \"Success\",\"message\": \"\",\"emp\": [ {\"empId\":
+	// 1046458,\"userName\": \"ShekharG\",\"password\": \"abcd\",\"fullName\":
+	// \"Shekhar Gupta\",\"emailId\":
+	// \"shekhar.gupta@mindtree.com\",\"dateOfBirth\":
+	// \"06/04/1992\",\"gender\": \"Male\",\"securityQuestion\": \"Birth
+	// Place\",\"securityAnswer\": \"Bhopal\" }]}";
+	// when(mockEmpService.findOne(30L)).thenReturn(emp);
+	// mockMvc.perform(get("/EmpMgt/getByEmpId/{empId}",
+	// 1)).andExpect(status().isOk())
+	// .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+	// .andExpect(status().is2xxSuccessful()).andExpect(content().json(result));
+	// }
+
+	// @Test
+	// public void testGetEmpDetailByEmpIdNotAvi() throws Exception {
+	// String uri = "/EmpMgt/getByEmpId/{empId}";
+	// Long empId = Long.MAX_VALUE;
+	// MvcResult result = mockMvc
+	// .perform(MockMvcRequestBuilders.get(uri,
+	// empId).accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+	// String contant = result.getRequest().getContentAsString();
+	// int status = result.getResponse().getStatus();
+	//
+	// Assert.assertEquals("failure-expected Http status 400", 400, status);
+	// Assert.assertTrue("failure-expected Http response body to have value",
+	// contant.trim().length() < 0);
+	// }
+
+	// =========================================== Get User by id when it is not
+	// present
+
+	// @Test
+	// public void verifyGetEmployeeException() throws Exception {
+	//
+	// String result = "{\"statusCode\": 200,\"status\":
+	// \"Success\",\"message\":\"failed to get the Employee from database with
+	// id 1\",\"emp\":[]}";
+	//
+	// when(mockEmpService.findOne(Long.MAX_VALUE)).thenReturn(null);
+	// mockMvc.perform(MockMvcRequestBuilders.get("/EmpMgt/getByEmpId/{empId}",
+	// 1)
+	// .contentType(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().is2xxSuccessful())
+	// .andExpect(content().json(result));
+	// }
+
+	// @Test
+	// public void testdeleteEmp() throws Exception {
+	// String uri = "/EmpMgt/deleteEmp/{empId}";
+	// Long empId = new Long(2);
+	// MvcResult result = mockMvc
+	// .perform(MockMvcRequestBuilders.delete(uri,
+	// empId).accept(MediaType.APPLICATION_JSON_VALUE))
+	// .andReturn();
+	// int status = result.getResponse().getStatus();
+	//
+	// Assert.assertEquals("failure-expected Http status 200", 200, status);
+	// Employee deletedEmployee = EmployeeManagementServices.findOne(empId);
+	// Assert.assertNull("failure-expected entity shuld be null",
+	// deletedEmployee);
+	//
+	// }
+	// @Test
+	// public void testdeleteEmp() throws Exception {
+	// String uri = "/EmpMgt/deleteEmp/{empId}";
+	// Long empId = new Long(3);
+	// MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete(uri,
+	// empId).accept(MediaType.APPLICATION_JSON))
+	// .andReturn();
+	// int status = result.getResponse().getStatus();
+	// Assert.assertEquals("failure-excepted status", 204, status);
+	// }
+
+	// =========================================== Method to test the add
+	// Employee into the database
+
+	// @Test
+	// public void verifyAddEmployee()
+	// {
+	// String input ="";
+	//
+	// mockMvc.perform(MockMvcRequestBuilders.post("/EmpMgt/addEmp").contentType(MediaType.APPLICATION_JSON_VALUE)
+	// .accept(MediaType.APPLICATION_JSON_VALUE).content(input)).andExpect(status().isBadRequest())
+	// .andExpect(content().json(expected));
+	//
+	//
+	// }
+
+	// @Test
+	// public void testAddEmp() throws Exception {
+	// String uri = "/EmpMgt/addEmp";
+	// Employee employee = new Employee();
+	// employee.setEmailId("game@gmail.com");
+	// employee.setFullName("rupesh m");
+	// employee.setGender("Male");
+	// employee.setPassword("gate");
+	// employee.setSecurityAnswer("m");
+	// employee.setSecurityAnswer("last name?");
+	// employee.setUserName("avi");
+	// employee.setDateOfBirth("1992-02-10");
+	// MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(uri)
+	// .contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+	// int status = result.getResponse().getStatus();
+	// String contant = result.getRequest().getContentAsString();
+	// Assert.assertEquals("failure-expected Http status 201", 201, status);
+	// Assert.assertTrue("failure-expected Http response body to have value",
+	// contant.trim().length() > 0);
+	//
+	// }
+	//
+	// @Test
+	// public void testCheckLogin() throws Exception {
+	// String uri = "/EmpMgt/checkLogin";
+	// Employee employee = new Employee();
+	// employee.setPassword("gate");
+	// employee.setUserName("avi");
+	// MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(uri)
+	// .contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+	// int status = result.getResponse().getStatus();
+	// String contant = result.getRequest().getContentAsString();
+	// Assert.assertEquals("failure-expected Http status 200", 200, status);
+	// Assert.assertTrue("failure-expected Http response body to have value",
+	// contant.trim().length() > 0);
+	//
+	// }
+	//
+	// @Test
+	// public void testCheckLoginInvalid() throws Exception {
+	// String uri = "/EmpMgt/checkLogin";
+	// Employee employee = new Employee();
+	// employee.setPassword(" ");
+	// employee.setUserName(" ");
+	// MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(uri)
+	// .contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+	// int status = result.getResponse().getStatus();
+	// String contant = result.getRequest().getContentAsString();
+	// Assert.assertEquals("failure-expected Http status 400", 400, status);
+	// Assert.assertTrue("failure-expected Http response body to have value",
+	// contant.trim().length() < 0);
+	//
+	// }
+
+}

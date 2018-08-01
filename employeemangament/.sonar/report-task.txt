@@ -1,0 +1,6 @@
+projectKey=employeemangament
+serverUrl=http://localhost:8900
+serverVersion=7.1.0.11001
+dashboardUrl=http://localhost:8900/dashboard/index/employeemangament
+ceTaskId=AWTVj_t4ZHZRKI4GWa4s
+ceTaskUrl=http://localhost:8900/api/ce/task?id=AWTVj_t4ZHZRKI4GWa4s

@@ -1,0 +1,54 @@
+package com.mindtree.employeemanagement.service;
+
+import java.util.Collection;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mindtree.employeemanagement.entity.Employee;
+import com.mindtree.employeemanagement.repository.EmployeeManagementRepository;
+
+@Service(value = "EmployeeManagementServices")
+public class EmployeeManagementServiceImpl implements EmployeeManagementServices {
+
+	@Autowired
+	EmployeeManagementRepository employeeManagementRepository;
+
+	@Override
+	public Collection<Employee> findAll() {
+		Collection<Employee> employees = employeeManagementRepository.findAll();
+		return employees;
+	}
+
+	@Override
+	public Employee findOne(Long id) {
+		Employee employee = employeeManagementRepository.findById(id).get();
+
+		return employee;
+	}
+
+	@Override
+	@Transactional
+	public Employee create(Employee employee) {
+		Employee createdEmployee = employeeManagementRepository.save(employee);
+		return createdEmployee;
+	}
+
+	@Override
+	@Transactional
+	public boolean delete(Long empId) {
+		employeeManagementRepository.deleteById(empId);
+		return true;
+	}
+
+	@Override
+	public Employee checkLogin(String userName, String password) {
+
+		Employee employee = employeeManagementRepository.findEmployeeByUserNameAndPassword(userName, password);
+		return employee;
+
+	}
+
+}

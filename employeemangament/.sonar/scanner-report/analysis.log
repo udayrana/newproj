@@ -1,0 +1,145 @@
+Environment variables:
+  - =::=::\
+  - =A:=A:\
+  - =C:=C:\Users\M1046571\Downloads\employeemangament
+  - =D:=D:\
+  - =E:=E:\
+  - ALLUSERSPROFILE=C:\ProgramData
+  - APPDATA=C:\Users\M1046571\AppData\Roaming
+  - COMPUTERNAME=A2ML10704
+  - ComSpec=C:\windows\system32\cmd.exe
+  - CommonProgramFiles=C:\Program Files\Common Files
+  - CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
+  - CommonProgramW6432=C:\Program Files\Common Files
+  - ERROR_CODE=0
+  - FPS_BROWSER_APP_PROFILE_STRING=Internet Explorer
+  - FPS_BROWSER_USER_PROFILE_STRING=Default
+  - HOMEDRIVE=C:
+  - HOMEPATH=\Users\M1046571
+  - IWBPath=C:\Program Files (x86)\SAP\FrontEnd\iwb
+  - JAVA_EXEC="C:\Program Files\Java\jdk1.8.0_152\bin\java.exe"
+  - JAVA_HOME=C:\Program Files\Java\jdk1.8.0_152
+  - LOCALAPPDATA=C:\Users\M1046571\AppData\Local
+  - LOGONSERVER=\\MTW02DC04
+  - NUMBER_OF_PROCESSORS=4
+  - OS=Windows_NT
+  - OneDrive=C:\Users\Administrator\OneDrive
+  - PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+  - PROCESSOR_ARCHITECTURE=AMD64
+  - PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 69 Stepping 1, GenuineIntel
+  - PROCESSOR_LEVEL=6
+  - PROCESSOR_REVISION=4501
+  - PROJECT_HOME=C:\Users\M1046571\Downloads\employeemangament
+  - PROMPT=$P$G
+  - PSModulePath=C:\Users\M1046571\Documents\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\windows\system32\WindowsPowerShell\v1.0\Modules;C:\Program Files (x86)\Microsoft Azure Information Protection\Powershell
+  - PUBLIC=C:\Users\Public
+  - Path=C:\ProgramData\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\MySQL\MySQL Utilities 1.6\;C:\Users\M1046571\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_152\bin;D:\applications\sonar-runner-2.4\bin;
+  - ProgramData=C:\ProgramData
+  - ProgramFiles=C:\Program Files
+  - ProgramFiles(x86)=C:\Program Files (x86)
+  - ProgramW6432=C:\Program Files
+  - SESSIONNAME=Console
+  - SONAR_RUNNER_HOME=D:\applications\sonar-runner-2.4\bin\..
+  - SystemDrive=C:
+  - SystemRoot=C:\windows
+  - TEMP=C:\Users\M1046571\AppData\Local\Temp
+  - TMP=C:\Users\M1046571\AppData\Local\Temp
+  - UATDATA=C:\windows\CCM\UATData\D9F8C395-CAB8-491d-B8AC-179A1FE1BE77
+  - USERDNSDOMAIN=MINDTREE.COM
+  - USERDOMAIN=MINDTREE
+  - USERDOMAIN_ROAMINGPROFILE=MINDTREE
+  - USERNAME=M1046571
+  - USERPROFILE=C:\Users\M1046571
+  - classpath=C:\Program Files\Java\jre1.8.0_152\lib\rt.jar
+  - windir=C:\windows
+System properties:
+  - ROOT_LOGGER_LEVEL=DEBUG
+  - awt.toolkit=sun.awt.windows.WToolkit
+  - file.encoding=Cp1252
+  - file.encoding.pkg=sun.io
+  - file.separator=\
+  - java.awt.graphicsenv=sun.awt.Win32GraphicsEnvironment
+  - java.awt.printerjob=sun.awt.windows.WPrinterJob
+  - java.class.path=D:\applications\sonar-runner-2.4\bin\..\lib\sonar-runner-dist-2.4.jar
+  - java.class.version=52.0
+  - java.endorsed.dirs=C:\Program Files\Java\jdk1.8.0_152\jre\lib\endorsed
+  - java.ext.dirs=C:\Program Files\Java\jdk1.8.0_152\jre\lib\ext;C:\windows\Sun\Java\lib\ext
+  - java.home=C:\Program Files\Java\jdk1.8.0_152\jre
+  - java.io.tmpdir=C:\Users\M1046571\AppData\Local\Temp\
+  - java.library.path=C:\Program Files\Java\jdk1.8.0_152\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\ProgramData\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\MySQL\MySQL Utilities 1.6\;C:\Users\M1046571\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_152\bin;D:\applications\sonar-runner-2.4\bin;;.
+  - java.runtime.name=Java(TM) SE Runtime Environment
+  - java.runtime.version=1.8.0_152-b16
+  - java.specification.name=Java Platform API Specification
+  - java.specification.vendor=Oracle Corporation
+  - java.specification.version=1.8
+  - java.vendor=Oracle Corporation
+  - java.vendor.url=http://java.oracle.com/
+  - java.vendor.url.bug=http://bugreport.sun.com/bugreport/
+  - java.version=1.8.0_152
+  - java.vm.info=mixed mode
+  - java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+  - java.vm.specification.name=Java Virtual Machine Specification
+  - java.vm.specification.vendor=Oracle Corporation
+  - java.vm.specification.version=1.8
+  - java.vm.vendor=Oracle Corporation
+  - java.vm.version=25.152-b16
+  - line.separator=
+
+  - os.arch=amd64
+  - os.name=Windows 10
+  - os.version=10.0
+  - path.separator=;
+  - project.home=C:\Users\M1046571\Downloads\employeemangament
+  - runner.home=D:\applications\sonar-runner-2.4\bin\..
+  - sun.arch.data.model=64
+  - sun.boot.class.path=C:\Program Files\Java\jdk1.8.0_152\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_152\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_152\jre\classes
+  - sun.boot.library.path=C:\Program Files\Java\jdk1.8.0_152\jre\bin
+  - sun.cpu.endian=little
+  - sun.cpu.isalist=amd64
+  - sun.desktop=windows
+  - sun.io.unicode.encoding=UnicodeLittle
+  - sun.java.command=org.sonar.runner.Main -X
+  - sun.java.launcher=SUN_STANDARD
+  - sun.jnu.encoding=Cp1252
+  - sun.management.compiler=HotSpot 64-Bit Tiered Compilers
+  - sun.os.patch.level=
+  - sun.stderr.encoding=cp437
+  - sun.stdout.encoding=cp437
+  - user.country=US
+  - user.dir=C:\Users\M1046571\Downloads\employeemangament
+  - user.home=C:\Users\M1046571
+  - user.language=en
+  - user.name=M1046571
+  - user.script=
+  - user.timezone=Asia/Calcutta
+  - user.variant=
+SonarQube plugins:
+  - SonarC# 7.0.1.4822 (csharp)
+  - SonarPython 1.9.1.2080 (python)
+  - SonarJava 5.2.0.13398 (java)
+  - Git 1.4.0.1037 (scmgit)
+  - SonarFlex 2.4.0.1222 (flex)
+  - SonarXML 1.5.0.1373 (xml)
+  - SonarPHP 2.13.0.3107 (php)
+  - SonarTS 1.6.0.2388 (typescript)
+  - Svn 1.7.0.1017 (scmsvn)
+  - SonarJS 4.1.0.6085 (javascript)
+Global properties:
+  - sonar.core.id=AWS3PIKX4aJfutqtNa58
+  - sonar.core.startTime=2018-07-26T12:10:36+0530
+Settings for module: employeemangament
+  - sonar.host.url=http://localhost:8900
+  - sonar.jacoco.reportPath=C:/Users/M1046571/Downloads/employeemangament/target/jacoco.exec
+  - sonar.java.binaries=C:/Users/M1046571/Downloads/employeemangament/target/classes
+  - sonar.junit.reportsPath=C:/Users/M1046571/Downloads/employeemangament/target/surefire-reports
+  - sonar.language=java
+  - sonar.projectBaseDir=C:\Users\M1046571\Downloads\employeemangament\.
+  - sonar.projectKey=employeemangament
+  - sonar.projectName=employeemangament
+  - sonar.projectVersion=1.0
+  - sonar.projectname=CriketPlayerDetials
+  - sonar.sourceEncoding=windows-1252
+  - sonar.sources=C:/Users/M1046571/Downloads/employeemangament/src/main/java
+  - sonar.tests=C:/Users/M1046571/Downloads/employeemangament/src/test/java
+  - sonar.verbose=true
+  - sonar.working.directory=C:\Users\M1046571\Downloads\employeemangament\.\.sonar
