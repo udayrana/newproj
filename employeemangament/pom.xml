@@ -134,6 +134,7 @@
 
 
 		</plugins>
+		<finalName>employeemangament</finalName>
 	</build>
 
 
