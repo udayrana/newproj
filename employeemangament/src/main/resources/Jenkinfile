@@ -1,0 +1,55 @@
+pipeline
+       {
+             agent any
+                    stages
+                    {
+                                 stage('compile-stage')
+                                 {
+                                   steps      
+                                   {    
+                                       withMaven(maven:'Maven_3_3_9')
+                                       {
+                                              sh 'mvn -f employeemangement/pom.xml clean compile'
+                                       }
+                                    }   
+                                 }      
+                                 stage('Testing-stage')
+                                 {
+                                  steps
+                                   {
+                                        withMaven(maven:'Maven_3_3_9')
+                                       {
+                                              sh 'mvn -f employeemangement/pom.xml test'
+                                       }
+                                    }   
+                                 } 
+                                 stage('Build-stage')
+                                 {
+                                    steps
+                                    {
+                                       withMaven(maven:'Maven_3_3_9')
+                                       {
+                                              sh 'mvn -f employeemangement/pom.xml package docker:build'
+                                       }
+                                    } 
+                                 }  
+                                  stage('Docker Image') 
+                                  {
+                                       steps
+                                       {
+                                 dir ('employeemangament/target/docker') 
+                                 {
+                                               sh 'docker build -t demoimage .'
+                                 }
+                                 }
+                           }
+                           stage ('Run Docker') 
+                           {
+                          steps
+                          {
+                                 sh 'docker run -p 8081:8081 -d demoimage'
+                                 
+                          }      
+                          } 
+                    } 
+       } 
