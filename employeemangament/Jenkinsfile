@@ -9,7 +9,7 @@ pipeline
                                    {    
                                        withMaven(maven:'Maven_3_5_4')
                                        {
-                                              sh 'mvn -f pom.xml clean compile'
+                                              sh 'mvn -f employeemangament/pom.xml clean compile'
                                        }
                                     }   
                                  }      
