@@ -29,7 +29,7 @@ pipeline
                                     {
                                        withMaven(maven:'Maven_3_5_4')
                                        {
-                                              sh 'mvn -f employeemangament/pom.xml package docker:build'
+                                              sh 'mvn -f employeemangament/pom.xml package'
                                        }
                                     } 
                                  }  
